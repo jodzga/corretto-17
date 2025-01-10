@@ -27,7 +27,7 @@
 #include "gc/g1/g1ConcurrentMark.inline.hpp"
 #include "gc/g1/g1ConcurrentMarkThread.inline.hpp"
 #include "gc/g1/g1PeriodicGCTask.hpp"
-#include "gc/shared/concurrentGCTimer.hpp"
+#include "gc/shared/gcTimer.hpp"
 #include "gc/shared/suspendibleThreadSet.hpp"
 #include "logging/log.hpp"
 #include "runtime/globals.hpp"
