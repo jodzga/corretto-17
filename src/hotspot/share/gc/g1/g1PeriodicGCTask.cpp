@@ -82,9 +82,5 @@ G1PeriodicGCTask::G1PeriodicGCTask(const char* name) :
 
 void G1PeriodicGCTask::execute() {
   check_for_periodic_gc();
-  // G1PeriodicGCInterval is a manageable flag and can be updated
-  // during runtime. If no value is set, wait a second and run it
-  // again to see if the value has been updated. Otherwise use the
-  // real value provided.
-  schedule(G1PeriodicGCInterval == 0 ? 1000 : G1PeriodicGCInterval);
+  schedule(1000);
 }
