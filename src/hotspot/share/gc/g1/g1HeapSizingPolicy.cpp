@@ -88,7 +88,7 @@ size_t G1HeapSizingPolicy::young_collection_expansion_amount() {
   double long_term_pause_time_ratio = _analytics->long_term_pause_time_ratio();
   double short_term_pause_time_ratio = _analytics->short_term_pause_time_ratio();
   const double pause_time_threshold = 1.0 / (1.0 + GCTimeRatio);
-  double threshold = scale_with_heap(pause_time_threshold);
+  double threshold = pause_time_threshold;
 
   size_t expand_bytes = 0;
 
