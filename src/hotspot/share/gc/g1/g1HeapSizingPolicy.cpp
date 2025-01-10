@@ -120,8 +120,7 @@ size_t G1HeapSizingPolicy::young_collection_expansion_amount() {
   // is still over the threshold. This indicates a smaller number of GCs were
   // long enough to make the average exceed the threshold.
   bool filled_history_buffer = _pauses_since_start == _num_prev_pauses_for_heuristics;
-  if ((_ratio_over_threshold_count == MinOverThresholdForGrowth) ||
-      (filled_history_buffer && (long_term_pause_time_ratio > threshold))) {
+  if (long_term_pause_time_ratio > threshold) {
     size_t min_expand_bytes = HeapRegion::GrainBytes;
     size_t reserved_bytes = _g1h->max_capacity();
     size_t committed_bytes = _g1h->capacity();
@@ -154,11 +153,7 @@ size_t G1HeapSizingPolicy::young_collection_expansion_amount() {
       double const ScaleUpRange = pause_time_threshold * 2.0;
 
       double ratio_delta;
-      if (filled_history_buffer) {
-        ratio_delta = long_term_pause_time_ratio - threshold;
-      } else {
-        ratio_delta = (_ratio_over_threshold_sum / _ratio_over_threshold_count) - threshold;
-      }
+      ratio_delta = long_term_pause_time_ratio - threshold;
 
       expand_bytes = MIN2(expand_bytes_via_pct, committed_bytes);
       if (ratio_delta < StartScaleDownAt) {
