@@ -312,7 +312,16 @@
   product(bool, G1UsePreventiveGC, true, DIAGNOSTIC,                        \
           "Allows collections to be triggered proactively based on the      \
            number of free regions and the expected survival rates in each   \
-           section of the heap.")
+           section of the heap.")                                           \
+                                                                            \
+  product(bool, G1ScaleWithHeapPauseTimeThreshold, true, EXPERIMENTAL,      \
+          "If true, pause time threshold is linearly lowered for heap "     \
+          "smaller than 1/2 of max heap size: the smaller the heap the "    \
+          "smaller pause time threshold. For heap larger than 1/2 of max "  \
+          "heap size the pause time threshold is equal to "                 \
+          "1.0 / (1.0 + GCTimeRatio). If false, pause time threshold is "   \
+          "always equal to 1.0 / (1.0 + GCTimeRatio) regardless of the "    \
+          "current heap size.")
 
 // end of GC_G1_FLAGS
 
