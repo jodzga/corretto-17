@@ -27,6 +27,7 @@
 #include "gc/g1/g1ConcurrentMark.inline.hpp"
 #include "gc/g1/g1ConcurrentMarkThread.inline.hpp"
 #include "gc/g1/g1PeriodicGCTask.hpp"
+#include "gc/shared/gcTimer.hpp"
 #include "gc/shared/suspendibleThreadSet.hpp"
 #include "logging/log.hpp"
 #include "runtime/globals.hpp"
@@ -46,6 +47,11 @@ bool G1PeriodicGCTask::should_start_periodic_gc() {
 
   // Check if enough time has passed since the last GC.
   uintx time_since_last_gc = (uintx)g1h->time_since_last_collection().milliseconds();
+  if (G1PeriodicGCIntervalSinceConcurrent) {
+    // Check if enough time has passed since the last CM.
+    Tickspan time_since_last_cm = Ticks::now() - g1h->concurrent_mark()->gc_timer_cm()->gc_end();
+    time_since_last_gc = (uintx)time_since_last_cm.milliseconds();
+  }
   if ((time_since_last_gc < G1PeriodicGCInterval)) {
     log_debug(gc, periodic)("Last GC occurred " UINTX_FORMAT "ms before which is below threshold " UINTX_FORMAT "ms. Skipping.",
                             time_since_last_gc, G1PeriodicGCInterval);

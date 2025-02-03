@@ -332,7 +332,13 @@
           "integer between 1 and 10. 1 means most aggressive heap "         \
           "expansion, 10 means least aggressive heap expansion. The "       \
           "default is 4.")                                                  \
-          range(1, 10) 
+          range(1, 10)                                                      \
+                                                                            \
+  product(bool, G1PeriodicGCIntervalSinceConcurrent, false, EXPERIMENTAL,   \
+          "If true, the periodic gc is triggered unless there was a "       \
+          "concurrent gc within the last periodic gc interval. If false, "  \
+          "the periodic gc is triggered unless there was any gc within "    \
+          "the last periodic gc interval.")
 
 // end of GC_G1_FLAGS
 
